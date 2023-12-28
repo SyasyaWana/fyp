@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const AdminScreen(),
+      home: const WelcomeScreen(),
       debugShowCheckedModeBanner: false, // Add this line to hide the debug banner
     );
   }

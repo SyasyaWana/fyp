@@ -173,26 +173,6 @@ class _StudentListSVState extends State<StudentListSV> {
     }
   }
 
-  void updateCompletionStatus(String collectionName, String studentName, bool allFormsCompleted) async {
-    CollectionReference scoresCollection = _firestore.collection(collectionName);
-
-    try {
-      QuerySnapshot querySnapshot = await scoresCollection
-          .where('studentName', isEqualTo: studentName)
-          .get();
-
-      if (querySnapshot.docs.isNotEmpty) {
-        // Assuming there is only one document for each student, get the first one
-        DocumentSnapshot docSnapshot = querySnapshot.docs.first;
-
-        // Update the document with the completion status
-        await docSnapshot.reference.update({'completionStatus': allFormsCompleted ? 'Complete' : 'Incomplete'});
-      }
-    } catch (e) {
-      print('Error updating completion status: $e');
-    }
-  }
-
   Widget buildExpandableListTile(String studentName, String id, String projectTitle, String supervisorName, String assessor1Name, String assessor2Name, String collectionName, int index) {
     return ExpansionTile(
       title: Row(
@@ -224,9 +204,6 @@ class _StudentListSVState extends State<StudentListSV> {
                   bool assessor2Completed = (scoresData['totalPresentationForm2Score'] ?? 0) >= 1;
 
                   bool allFormsCompleted = supervisorCompleted && assessorCompleted && assessor2Completed;
-
-                  // Update Firestore with completion status
-                  updateCompletionStatus(collectionName, studentName, allFormsCompleted);
 
                   return Text(
                     allFormsCompleted ? 'Complete' : 'Incomplete',
@@ -327,7 +304,7 @@ class _StudentListSVState extends State<StudentListSV> {
                 items: assessorOptions.map((assessor) {
                   return DropdownMenuItem<String>(
                     value: assessor,
-                    child: Text('$assessor: ${assessor == "Presentation Form" ? scoresData['totalPresentationFormScore'] : scoresData['totalFinalReportFormScore'] ?? 'N/A'}'),
+                    child: Text('$assessor: ${assessor == "Presentation Form" ? (scoresData['totalPresentationFormScore'] ?? 'N/A') : (scoresData['totalFinalReportFormScore'] ?? 'N/A')}'),
                   );
                 }).toList(),
                 onChanged: (String? newValue) {

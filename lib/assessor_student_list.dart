@@ -360,7 +360,7 @@ class _StudentListASState extends State<StudentListAS> {
                 items: assessorOptions.map((assessor) {
                   return DropdownMenuItem<String>(
                     value: assessor,
-                    child: Text('$assessor: ${assessor == "Presentation Form" ? scoresData['totalPresentationFormScore'] : scoresData['totalFinalReportFormScore'] ?? 'N/A'}'),
+                    child: Text('$assessor: ${assessor == "Presentation Form" ? (scoresData['totalPresentationFormScore'] ?? 'N/A') : (scoresData['totalFinalReportFormScore'] ?? 'N/A')}'),
                   );
                 }).toList(),
                 onChanged: (String? newValue) {

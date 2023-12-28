@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:systemfyp/assessor.dart';
 import 'package:systemfyp/assessor_admin.dart';
-import 'package:systemfyp/dashboard_screen.dart';
 import 'package:systemfyp/form1.dart';
 import 'package:systemfyp/form2.dart';
 import 'package:systemfyp/result_fyp1.dart';
@@ -605,7 +604,7 @@ class _AdminScreenState extends State<AdminScreen> {
       ),
       onTap: () {
         if (title == 'Dashboard') {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => DashboardScreen()));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => const AdminScreen()));
         } else if (title == 'Setting') {
           Navigator.push(context, MaterialPageRoute(builder: (context) => const SettingScreen()));
         } else if (title == 'Logout') {

@@ -44,8 +44,6 @@ dependencies:
   path_provider: ^2.1.1
   provider: ^6.1.1
   firebase_analytics: ^10.7.4
-  pie_chart: ^5.4.0
-  url_launcher: ^6.2.2
 
 dev_dependencies:
   flutter_test:

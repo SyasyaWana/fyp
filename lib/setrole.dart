@@ -5,8 +5,9 @@ import 'package:systemfyp/supervisor.dart';
 
 class SetRoleScreen extends StatefulWidget {
   static String id = "setRole_screen";
+  final String userEmail;
 
-  const SetRoleScreen({super.key});
+  const SetRoleScreen({Key? key, required this.userEmail}) : super(key: key);
 
   @override
   _SetRoleScreenState createState() => _SetRoleScreenState();
@@ -19,6 +20,15 @@ class _SetRoleScreenState extends State<SetRoleScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        title: const Text(" "),
+      ),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Row(
@@ -27,7 +37,7 @@ class _SetRoleScreenState extends State<SetRoleScreen> {
               child: Center(
                 child: Column(
                   children: [
-                    const SizedBox(height: 80),
+                    const SizedBox(height: 20),
                     const Text(
                       "Final Year Project Evaluation Apps",
                       style: TextStyle(
@@ -46,7 +56,7 @@ class _SetRoleScreenState extends State<SetRoleScreen> {
                       ),
                       textAlign: TextAlign.center,
                     ),
-                    const SizedBox(height: 40),
+                    const SizedBox(height: 50),
                     const Text(
                       "Select The Role",
                       style: TextStyle(
@@ -55,7 +65,7 @@ class _SetRoleScreenState extends State<SetRoleScreen> {
                       ),
                       textAlign: TextAlign.center,
                     ),
-                    const SizedBox(height: 40),
+                    const SizedBox(height: 30),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -80,7 +90,8 @@ class _SetRoleScreenState extends State<SetRoleScreen> {
                                       padding: const EdgeInsets.all(40),
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(20),
-                                        border: Border.all(color: Colors.blueGrey),
+                                        color: Colors.indigo, // Set the background color to indigo
+                                        border: Border.all(color: Colors.indigo),
                                       ),
                                       child: Column(
                                         children: [
@@ -89,6 +100,7 @@ class _SetRoleScreenState extends State<SetRoleScreen> {
                                             style: TextStyle(
                                               fontSize: 18,
                                               fontWeight: FontWeight.bold,
+                                              color: Colors.white, // Set the text color to white
                                             ),
                                           ),
                                           const SizedBox(height: 20),
@@ -153,7 +165,8 @@ class _SetRoleScreenState extends State<SetRoleScreen> {
                                   padding: const EdgeInsets.all(40),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(20),
-                                    border: Border.all(color: Colors.blueGrey),
+                                    color: Colors.purple, // Set the background color to indigo
+                                    border: Border.all(color: Colors.purple),
                                   ),
                                   child: Column(
                                     children: [
@@ -162,6 +175,7 @@ class _SetRoleScreenState extends State<SetRoleScreen> {
                                         style: TextStyle(
                                           fontSize: 18,
                                           fontWeight: FontWeight.bold,
+                                          color: Colors.white,
                                         ),
                                       ),
                                       const SizedBox(height: 20),
@@ -178,7 +192,86 @@ class _SetRoleScreenState extends State<SetRoleScreen> {
                           ],
                         ),
                         const SizedBox(height: 20),
-
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                if (widget.userEmail == 'i@gmail.com') {
+                                  // Navigate to AdminScreen only for admin user
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => const AdminScreen()));
+                                } else {
+                                  // Show a warning message or handle accordingly for non-admin users
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: const Text('Warning'),
+                                        content: const Text('You do not have permission to access AdminScreen.'),
+                                        actions: <Widget>[
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: const Text('OK'),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                }
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.all(20),
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      padding: const EdgeInsets.all(40),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20),
+                                        color: Colors.deepPurple, // Set the background color to indigo
+                                        border: Border.all(color: Colors.deepPurple),
+                                      ),
+                                      child: Column(
+                                        children: [
+                                          const Text(
+                                            "ADMIN",
+                                            style: TextStyle(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                          const SizedBox(height: 20),
+                                          Image.asset(
+                                            "assets/png_images/admin.png",
+                                            width: 80,
+                                            height: 60,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 20),
+                            GestureDetector(
+                              onTap: () {},
+                              child: Padding(
+                                padding: const EdgeInsets.all(50),
+                                child: Container(
+                                  padding: const EdgeInsets.all(40),
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: const Color(0xFF45269C),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ],
                     ),
                   ],

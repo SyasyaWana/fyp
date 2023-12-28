@@ -89,14 +89,21 @@ class LoginScreenState extends State<LoginScreen> {
                         'user_email': email,
                       },
                     );
-
                     if (email == 'i@gmail.com' && password == '654321') {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => const AdminScreen()));
+                      // Navigate to SetRoleScreen for admin
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => SetRoleScreen(userEmail: email))).then((value) {
+                        // After SetRoleScreen, allow user to click and display AdminScreen
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => const AdminScreen()));
+                      });
                     } else {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => const SetRoleScreen()));
+                      // For other users, navigate to SetRoleScreen directly
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => SetRoleScreen(userEmail: email))).then((value) {
+                        // Handle the completion if needed
+                      });
                     }
 
                     print('Successfully Logged In');
+
                   });
                 } catch (e) {
                   analytics.logEvent(

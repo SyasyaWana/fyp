@@ -79,15 +79,24 @@ class _Result2State extends State<Result2> {
     });
   }
 
-  // Function to calculate the grade based on the total score
   String calculateGrade(double totalScore) {
-    if (totalScore >= 90) {
+    if (totalScore >= 80) {
       return "A";
-    } else if (totalScore >= 80) {
-      return "B";
+    } else if (totalScore >= 75) {
+      return "A-";
     } else if (totalScore >= 70) {
-      return "C";
+      return "B+";
+    } else if (totalScore >= 65) {
+      return "B";
     } else if (totalScore >= 60) {
+      return "B-";
+    } else if (totalScore >= 55) {
+      return "C+";
+    } else if (totalScore >= 50) {
+      return "C";
+    } else if (totalScore >= 45) {
+      return "C-";
+    } else if (totalScore >= 40) {
       return "D";
     } else {
       return "F";
