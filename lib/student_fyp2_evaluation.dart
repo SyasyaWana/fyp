@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
-import 'package:systemfyp/assessor2_fyp2.dart';
 import 'package:systemfyp/evaluationform2_AS.dart';
 import 'package:systemfyp/fyp2_evaluationAS2.dart';
 import 'package:systemfyp/viewstudentSV2.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class STUDENTFYP2EVALUATION extends StatefulWidget {
   const STUDENTFYP2EVALUATION({super.key});
@@ -20,6 +21,48 @@ class _STUDENTFYP2EVALUATIONState extends State<STUDENTFYP2EVALUATION> {
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final ref = FirebaseDatabase.instance.ref('students FYP 2');
+  String fullName = ''; // Added to store the full name
+  late FirebaseAuth _auth; // Declare FirebaseAuth instance
+  late User loggedInUser; // Declare User instance
+  late FirebaseFirestore _firestore; // Declare FirebaseFirestore instance
+
+  @override
+  void initState() {
+    super.initState();
+    _auth = FirebaseAuth.instance;
+    _firestore = FirebaseFirestore.instance;
+    getCurrentUser();
+  }
+
+  void getCurrentUser() async {
+    try {
+      final user = _auth.currentUser;
+      if (user != null) {
+        loggedInUser = user;
+
+        // Fetch user data from Firestore
+        await fetchUserData(loggedInUser.email!);
+
+        setState(() {}); // Trigger a rebuild to update UI with the retrieved full name
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  // Method to fetch user data from Firestore
+  Future<void> fetchUserData(String email) async {
+    try {
+      final userData = await _firestore.collection('users').where(
+          'email', isEqualTo: email).get();
+      if (userData.docs.isNotEmpty) {
+        // Assuming 'full name' is a field in your Firestore document
+        fullName = userData.docs.first['full name'];
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +93,15 @@ class _STUDENTFYP2EVALUATIONState extends State<STUDENTFYP2EVALUATION> {
             ),
             textAlign: TextAlign.center,
           ),
-
+          const SizedBox(height: 20),
+          Text(
+            "WELCOME, $fullName", // Display the full name
+            style: const TextStyle(
+              color: Colors.purple,
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
           const SizedBox(height: 20),
           Image.asset(
             "assets/png_images/student.png",
@@ -118,6 +169,13 @@ class _STUDENTFYP2EVALUATIONState extends State<STUDENTFYP2EVALUATION> {
               query: ref,
               itemBuilder: (BuildContext context, DataSnapshot snapshot, Animation<double> animation, int index) {
                 // Extract studentName from the snapshot
+
+                String assessor1Name = snapshot.child('Assessor 1 Name')
+                    .value
+                    .toString();
+
+                if (assessor1Name.trim().toLowerCase() == fullName.trim().toLowerCase()) {
+
                 String studentName = snapshot.child('Student Name').value.toString();
                 String id = snapshot.child('ID').value.toString();
                 String projectTitle = snapshot.child('Project Title').value.toString();
@@ -131,7 +189,7 @@ class _STUDENTFYP2EVALUATIONState extends State<STUDENTFYP2EVALUATION> {
                     title: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("${index + 1}"), // Index starts from 0, so add 1
+                        Text("${counter++}"),
                         const SizedBox(width: 10),
                         Text("$id"),
                         const SizedBox(width: 20),
@@ -171,7 +229,11 @@ class _STUDENTFYP2EVALUATIONState extends State<STUDENTFYP2EVALUATION> {
                     ),
                   ),
                 );
-              },
+              } else {
+                  // If Assessor 1 Name doesn't match, return an empty container
+                  return Container();
+                }
+              }
             ),
           ),
         ],

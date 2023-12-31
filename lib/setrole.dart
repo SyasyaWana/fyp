@@ -65,7 +65,7 @@ class _SetRoleScreenState extends State<SetRoleScreen> {
                       ),
                       textAlign: TextAlign.center,
                     ),
-                    const SizedBox(height: 30),
+                    const SizedBox(height: 25),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -103,7 +103,7 @@ class _SetRoleScreenState extends State<SetRoleScreen> {
                                               color: Colors.white, // Set the text color to white
                                             ),
                                           ),
-                                          const SizedBox(height: 20),
+                                          const SizedBox(height: 10),
                                           Image.asset(
                                             "assets/png_images/supervisor.png",
                                             width: 80,
@@ -133,7 +133,7 @@ class _SetRoleScreenState extends State<SetRoleScreen> {
                             ),
                           ],
                         ),
-                        const SizedBox(height: 20),
+                        const SizedBox(height: 10),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -178,7 +178,7 @@ class _SetRoleScreenState extends State<SetRoleScreen> {
                                           color: Colors.white,
                                         ),
                                       ),
-                                      const SizedBox(height: 20),
+                                      const SizedBox(height: 10),
                                       Image.asset(
                                         "assets/png_images/assessor.png",
                                         width: 90,
@@ -191,13 +191,13 @@ class _SetRoleScreenState extends State<SetRoleScreen> {
                             ),
                           ],
                         ),
-                        const SizedBox(height: 20),
+                        const SizedBox(height: 10),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             GestureDetector(
                               onTap: () {
-                                if (widget.userEmail == 'i@gmail.com') {
+                                if (widget.userEmail == 'inurina@unikl.edu.my') {
                                   // Navigate to AdminScreen only for admin user
                                   Navigator.push(context, MaterialPageRoute(builder: (context) => const AdminScreen()));
                                 } else {
@@ -207,7 +207,7 @@ class _SetRoleScreenState extends State<SetRoleScreen> {
                                     builder: (BuildContext context) {
                                       return AlertDialog(
                                         title: const Text('Warning'),
-                                        content: const Text('You do not have permission to access AdminScreen.'),
+                                        content: const Text('You do not have permission to access Admin Screen.'),
                                         actions: <Widget>[
                                           TextButton(
                                             onPressed: () {
@@ -242,7 +242,7 @@ class _SetRoleScreenState extends State<SetRoleScreen> {
                                               color: Colors.white,
                                             ),
                                           ),
-                                          const SizedBox(height: 20),
+                                          const SizedBox(height: 10),
                                           Image.asset(
                                             "assets/png_images/admin.png",
                                             width: 80,

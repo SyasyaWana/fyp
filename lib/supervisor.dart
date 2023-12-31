@@ -23,6 +23,7 @@ class _SupervisorScreenState extends State<SupervisorScreen> {
   final _firestore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
   late User loggedInUser;
+  String fullName = ''; // Added to store the full name
 
   @override
   void initState() {
@@ -35,6 +36,24 @@ class _SupervisorScreenState extends State<SupervisorScreen> {
       final user = _auth.currentUser;
       if (user != null) {
         loggedInUser = user;
+
+        // Fetch user data from Firestore
+        await fetchUserData(loggedInUser.email!);
+
+        setState(() {}); // Trigger a rebuild to update UI with the retrieved full name
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  // Method to fetch user data from Firestore
+  Future<void> fetchUserData(String email) async {
+    try {
+      final userData = await _firestore.collection('users').where('email', isEqualTo: email).get();
+      if (userData.docs.isNotEmpty) {
+        // Assuming 'full name' is a field in your Firestore document
+        fullName = userData.docs.first['full name'];
       }
     } catch (e) {
       print(e);
@@ -111,7 +130,16 @@ class _SupervisorScreenState extends State<SupervisorScreen> {
                     ),
                     textAlign: TextAlign.center,
                   ),
-                  const SizedBox(height: 100),
+                  const SizedBox(height: 40),
+                  Text(
+                    "WELCOME, $fullName", // Display the full name
+                    style: const TextStyle(
+                      color: Colors.indigo,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 80),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

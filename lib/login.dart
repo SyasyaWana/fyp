@@ -89,7 +89,7 @@ class LoginScreenState extends State<LoginScreen> {
                         'user_email': email,
                       },
                     );
-                    if (email == 'i@gmail.com' && password == '654321') {
+                    if (email == 'inurina@unikl.edu.my' && password == '123456') {
                       // Navigate to SetRoleScreen for admin
                       Navigator.push(context, MaterialPageRoute(builder: (context) => SetRoleScreen(userEmail: email))).then((value) {
                         // After SetRoleScreen, allow user to click and display AdminScreen
