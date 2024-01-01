@@ -148,7 +148,7 @@ class _AdminScreenState extends State<AdminScreen> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const SizedBox(height: 80),
+                  const SizedBox(height: 50),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

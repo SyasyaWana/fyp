@@ -21,13 +21,15 @@ class _SetRoleScreenState extends State<SetRoleScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: const Text(" "),
+        backgroundColor: Colors.purpleAccent,
+        iconTheme: const IconThemeData(color: Colors.white),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context);
           },
         ),
-        title: const Text(" "),
       ),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -65,7 +67,7 @@ class _SetRoleScreenState extends State<SetRoleScreen> {
                       ),
                       textAlign: TextAlign.center,
                     ),
-                    const SizedBox(height: 25),
+                    const SizedBox(height: 30),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -106,45 +108,13 @@ class _SetRoleScreenState extends State<SetRoleScreen> {
                                           const SizedBox(height: 10),
                                           Image.asset(
                                             "assets/png_images/supervisor.png",
-                                            width: 80,
-                                            height: 60,
+                                            width: 100,
+                                            height: 70,
                                           ),
                                         ],
                                       ),
                                     ),
                                   ],
-                                ),
-                              ),
-                            ),
-                            const SizedBox(width: 20),
-                            GestureDetector(
-                              onTap: () {},
-                              child: Padding(
-                                padding: const EdgeInsets.all(50),
-                                child: Container(
-                                  padding: const EdgeInsets.all(40),
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: const Color(0xFF45269C),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 10),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(30),
-                              child: Container(
-                                padding: const EdgeInsets.all(40),
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: const Color(0xFF45269C),
-                                  ),
                                 ),
                               ),
                             ),
@@ -181,8 +151,8 @@ class _SetRoleScreenState extends State<SetRoleScreen> {
                                       const SizedBox(height: 10),
                                       Image.asset(
                                         "assets/png_images/assessor.png",
-                                        width: 90,
-                                        height: 60,
+                                        width: 100,
+                                        height: 70,
                                       ),
                                     ],
                                   ),
@@ -192,85 +162,71 @@ class _SetRoleScreenState extends State<SetRoleScreen> {
                           ],
                         ),
                         const SizedBox(height: 10),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                if (widget.userEmail == 'inurina@unikl.edu.my') {
-                                  // Navigate to AdminScreen only for admin user
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => const AdminScreen()));
-                                } else {
-                                  // Show a warning message or handle accordingly for non-admin users
-                                  showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return AlertDialog(
-                                        title: const Text('Warning'),
-                                        content: const Text('You do not have permission to access Admin Screen.'),
-                                        actions: <Widget>[
-                                          TextButton(
-                                            onPressed: () {
-                                              Navigator.of(context).pop();
-                                            },
-                                            child: const Text('OK'),
-                                          ),
-                                        ],
-                                      );
-                                    },
-                                  );
-                                }
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.all(20),
-                                child: Column(
-                                  children: [
-                                    Container(
-                                      padding: const EdgeInsets.all(40),
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(20),
-                                        color: Colors.deepPurple, // Set the background color to indigo
-                                        border: Border.all(color: Colors.deepPurple),
-                                      ),
-                                      child: Column(
-                                        children: [
-                                          const Text(
-                                            "ADMIN",
-                                            style: TextStyle(
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.white,
-                                            ),
-                                          ),
-                                          const SizedBox(height: 10),
-                                          Image.asset(
-                                            "assets/png_images/admin.png",
-                                            width: 80,
-                                            height: 60,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
+                        // Center Admin image
+                        GestureDetector(
+                          onTap: () {
+                            if (widget.userEmail == 'inurina@unikl.edu.my') {
+                              // Navigate to AdminScreen only for admin user
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const AdminScreen(),
                                 ),
-                              ),
-                            ),
-                            const SizedBox(width: 20),
-                            GestureDetector(
-                              onTap: () {},
-                              child: Padding(
-                                padding: const EdgeInsets.all(50),
-                                child: Container(
+                              );
+                            } else {
+                              // Show a warning message or handle accordingly for non-admin users
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: const Text('Warning'),
+                                    content: const Text('You do not have permission to access Admin Screen.'),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: const Text('OK'),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                            }
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(20),
+                            child: Column(
+                              children: [
+                                Container(
                                   padding: const EdgeInsets.all(40),
                                   decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: const Color(0xFF45269C),
-                                    ),
+                                    borderRadius: BorderRadius.circular(20),
+                                    color: Colors.deepPurple, // Set the background color to indigo
+                                    border: Border.all(color: Colors.deepPurple),
+                                  ),
+                                  child: Column(
+                                    children: [
+                                      const Text(
+                                        "ADMIN",
+                                        style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 10),
+                                      Image.asset(
+                                        "assets/png_images/admin.png",
+                                        width: 100,
+                                        height: 70,
+                                      ),
+                                    ],
                                   ),
                                 ),
-                              ),
+                              ],
                             ),
-                          ],
+                          ),
                         ),
                       ],
                     ),

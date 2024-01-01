@@ -39,7 +39,7 @@ class LoginScreenState extends State<LoginScreen> {
           },
         ),
         title: const Text('Login'),
-        backgroundColor: Colors.deepPurple, // Set the background color of the app bar
+        backgroundColor: Colors.purpleAccent, // Set the background color of the app bar
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24.0),

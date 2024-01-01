@@ -45,7 +45,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           },
         ),
         title: const Text('Sign Up'), // Set the title of the screen
-        backgroundColor: Colors.deepPurple, // Set the background color of the app bar
+        backgroundColor: Colors.purpleAccent, // Set the background color of the app bar
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24.0),

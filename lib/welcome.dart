@@ -15,6 +15,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.purpleAccent,
+        iconTheme: const IconThemeData(color: Colors.white),
+      ),
       backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24.0),
@@ -22,7 +26,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // Place the logo at the top and center it horizontally
             Align(
               alignment: Alignment.topCenter,
               child: Container(
@@ -30,10 +33,12 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 child: Image.asset(
                   "assets/png_images/logo.png",
                   width: 600,
-                  height: 393,
+                  height: 300,
                 ),
               ),
             ),
+            // Add 100 units of space below the logo
+            const SizedBox(height: 40),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -58,18 +63,22 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             ElevatedButton(
               onPressed: () {
                 Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: ((context) => const LoginScreen())));
+                  context,
+                  MaterialPageRoute(
+                    builder: ((context) => const LoginScreen()),
+                  ),
+                );
               },
               child: const Text('Login'),
             ),
             ElevatedButton(
               onPressed: () {
                 Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: ((context) => const RegistrationScreen())));
+                  context,
+                  MaterialPageRoute(
+                    builder: ((context) => const RegistrationScreen()),
+                  ),
+                );
               },
               child: const Text('Sign Up'),
             ),
@@ -78,6 +87,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       ),
     );
   }
+
   // You can define the _buildImageWithLabel function here
   Widget _buildImageWithLabel(String imagePath, String label) {
     return Column(
@@ -85,7 +95,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
         Image.asset(
           imagePath,
           width: 130,
-          height: 200,
+          height: 150,
         ),
         Text(label),
       ],
