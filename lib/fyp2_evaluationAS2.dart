@@ -78,6 +78,24 @@ class _AS2_2State extends State<AS2_2> {
             Navigator.pop(context);
           },
         ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const STUDENTFYP2EVALUATION(),
+                ),
+              );
+            },
+            child: const Text(
+              "Change as Assessor 1",
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ],
       ),
 
       body: Column(
@@ -110,36 +128,14 @@ class _AS2_2State extends State<AS2_2> {
           ),
           const SizedBox(height: 30),
           const Text(
-            "As Assessor 2",
+            "Currently As Assessor 2",
             style: TextStyle(
               color: Colors.black,
-              fontSize: 18,
+              fontSize: 16,
               fontWeight: FontWeight.bold,
+              decoration: TextDecoration.underline,
             ),
             textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 10), // Add spacing between image and buttons
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              TextButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const STUDENTFYP2EVALUATION(), // Navigate to the result screen
-                    ),
-                  );
-                },
-                child: const Text(
-                  "Change To Assessor 1",
-                  style: TextStyle(
-                    color: Colors.purple, // Choose a color for the link text
-                    decoration: TextDecoration.underline,
-                  ),
-                ),
-              ),
-            ],
           ),
           const SizedBox(height: 30),
           const Row(

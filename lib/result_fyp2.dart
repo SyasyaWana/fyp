@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
-import 'package:systemfyp/viewresult.dart';
 import 'package:systemfyp/viewresult2.dart';
 
 class FYP2RESULT extends StatefulWidget {

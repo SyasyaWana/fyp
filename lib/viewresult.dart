@@ -99,6 +99,31 @@ class _Result1State extends State<Result1> {
     }
   }
 
+  double calculatePointValue(String grade) {
+    switch (grade) {
+      case 'A':
+        return 4.00;
+      case 'A-':
+        return 3.67;
+      case 'B+':
+        return 3.33;
+      case 'B':
+        return 3.00;
+      case 'B-':
+        return 2.67;
+      case 'C+':
+        return 2.33;
+      case 'C':
+        return 2.00;
+      case 'C-':
+        return 1.67;
+      case 'D':
+        return 1.00;
+      default:
+        return 0.00;
+    }
+  }
+
   Future<Uint8List> generatePdf() async {
     final pdf = pw.Document();
 
@@ -288,7 +313,7 @@ class _Result1State extends State<Result1> {
                       pw.SizedBox(height: 20),
                       pw.Center(
                         child: pw.Text(
-                          "Total Score:",
+                          "Point Value:",
                           style: pw.TextStyle(
                             fontSize: 17,
                             fontWeight: pw.FontWeight.bold,
@@ -349,7 +374,7 @@ class _Result1State extends State<Result1> {
                       pw.SizedBox(height: 20),
                       pw.Center(
                         child: pw.Text(
-                          "${totalScore.toInt()}",
+                          "${calculatePointValue(calculateGrade(totalScore)).toStringAsFixed(2)}",
                           style: pw.TextStyle(
                             fontSize: 17,
                             fontWeight: pw.FontWeight.bold,
@@ -427,6 +452,12 @@ class _Result1State extends State<Result1> {
             Navigator.pop(context);
           },
         ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.print),
+            onPressed: printPdf,
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
@@ -435,21 +466,6 @@ class _Result1State extends State<Result1> {
           children: [
             Center(
               child: Image.asset('assets/png_images/logo.png', height: 150),
-            ),
-            SizedBox(
-              height: 80, // Set the desired height
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ElevatedButton(
-                    onPressed: printPdf,
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                    ),
-                    child: const Text('Print'),
-                  ),
-                ],
-              ),
             ),
             const SizedBox(height: 20),
             const SizedBox(
@@ -546,6 +562,10 @@ class _Result1State extends State<Result1> {
                       DataRow(cells: [
                         const DataCell(Text('Total Score')),
                         DataCell(Text('${totalScore.toInt()}')),
+                      ]),
+                      DataRow(cells: [
+                        const DataCell(Text('Point Value')),
+                        DataCell(Text('${calculatePointValue(calculateGrade(totalScore)).toStringAsFixed(2)}')),
                       ]),
                       DataRow(cells: [
                         const DataCell(Text('Grade')),

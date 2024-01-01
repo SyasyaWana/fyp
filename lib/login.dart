@@ -4,7 +4,6 @@ import 'package:systemfyp/admin.dart';
 import 'package:systemfyp/constant.dart';
 import 'package:systemfyp/setrole.dart';
 import 'package:systemfyp/signup.dart';
-import 'package:systemfyp/supervisor.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';

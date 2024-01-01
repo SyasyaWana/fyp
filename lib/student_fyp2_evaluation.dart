@@ -78,6 +78,24 @@ class _STUDENTFYP2EVALUATIONState extends State<STUDENTFYP2EVALUATION> {
             Navigator.pop(context);
           },
         ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const AS2_2(),
+                ),
+              );
+            },
+            child: const Text(
+              "Change as Assessor 2",
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ],
       ),
 
       body: Column(
@@ -110,36 +128,14 @@ class _STUDENTFYP2EVALUATIONState extends State<STUDENTFYP2EVALUATION> {
           ),
           const SizedBox(height: 30),
           const Text(
-            "As Assessor 1",
+            "Currently As Assessor 1",
             style: TextStyle(
               color: Colors.black,
-              fontSize: 18,
+              fontSize: 16,
               fontWeight: FontWeight.bold,
+              decoration: TextDecoration.underline,
             ),
             textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 10), // Add spacing between image and buttons
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              TextButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const AS2_2(), // Navigate to the result screen
-                    ),
-                  );
-                },
-                child: const Text(
-                  "Change To Assessor 2",
-                  style: TextStyle(
-                    color: Colors.purple, // Choose a color for the link text
-                    decoration: TextDecoration.underline,
-                  ),
-                ),
-              ),
-            ],
           ),
           const SizedBox(height: 30),
           const Row(

@@ -77,8 +77,20 @@ class _STUDENTFYP1SVState extends State<STUDENTFYP1SV> {
             Navigator.pop(context);
           },
         ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.article),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const FYP1RESULTSV(), // Navigate to the result screen
+                ),
+              );
+            },
+          ),
+        ],
       ),
-
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -107,23 +119,6 @@ class _STUDENTFYP1SVState extends State<STUDENTFYP1SV> {
               fontSize: 16,
               fontWeight: FontWeight.bold,
             ),
-          ),
-          const SizedBox(height: 20), // Add spacing between image and buttons
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const FYP1RESULTSV(), // Navigate to the result screen
-                    ),
-                  );
-                },
-                child: const Text("Result"),
-              ),
-            ],
           ),
           const SizedBox(height: 40),
           const Row(

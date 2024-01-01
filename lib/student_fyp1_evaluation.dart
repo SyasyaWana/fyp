@@ -78,6 +78,24 @@ class _STUDENTFYP1EVALUATIONState extends State<STUDENTFYP1EVALUATION> {
             Navigator.pop(context);
           },
         ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const AS2(),
+                ),
+              );
+            },
+            child: const Text(
+              "Change as Assessor 2",
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ],
       ),
 
       body: Column(
@@ -110,36 +128,14 @@ class _STUDENTFYP1EVALUATIONState extends State<STUDENTFYP1EVALUATION> {
           ),
           const SizedBox(height: 30),
           const Text(
-            "As Assessor 1",
+            "Currently As Assessor 1",
             style: TextStyle(
               color: Colors.black,
-              fontSize: 18,
+              fontSize: 16,
               fontWeight: FontWeight.bold,
+              decoration: TextDecoration.underline,
             ),
             textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              TextButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const AS2(),
-                    ),
-                  );
-                },
-                child: const Text(
-                  "Change To Assessor 2",
-                  style: TextStyle(
-                    color: Colors.purple,
-                    decoration: TextDecoration.underline,
-                  ),
-                ),
-              ),
-            ],
           ),
           const SizedBox(height: 30),
           const Row(
