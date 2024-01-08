@@ -2,6 +2,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:systemfyp/admin.dart';
+import 'package:systemfyp/assessor.dart';
+import 'package:systemfyp/supervisor.dart';
 import 'package:systemfyp/welcome.dart';
 
 Future main() async {

@@ -23,7 +23,7 @@ class _assesor2_fyp1State extends State<assesor2_fyp1> {
 
   Map<String, int?> selectedScore = {};
 
-  int? totalPresentationForm2Score;
+  double? totalPresentationForm2Score;
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -85,15 +85,23 @@ class _assesor2_fyp1State extends State<assesor2_fyp1> {
   }
 
   void _calculateTotalScore() {
-    int presentationForm2Sum = 0;
+    double presentationForm2Sum = 0.0;
 
     fyp1forms.forEach((form) {
       if (form['Form Type'] == 'Presentation Form 2') {
         List<String> subCriteriaList = (form['Sub-Criteria'] ?? '').split('\n');
+        List<String> subCriterionWeightagesList = (form['Sub-Criterion Weightages'] ?? '').split('\n');
+
         for (var subCriterionIndex = 0; subCriterionIndex < subCriteriaList.length; subCriterionIndex++) {
           final key = '${form['key']}-$subCriterionIndex';
           if (selectedScore[key] != null) {
-            presentationForm2Sum += selectedScore[key]!;
+            // Ensure the index is within bounds
+            if (subCriterionIndex < subCriterionWeightagesList.length) {
+              double subCriterionWeightage = double.parse(subCriterionWeightagesList[subCriterionIndex] ?? '0');
+              if (form['Form Type'] == 'Presentation Form 2') {
+                presentationForm2Sum += (selectedScore[key]! / 10 * subCriterionWeightage);
+              }
+            }
           }
         }
       }
@@ -269,9 +277,7 @@ class _assesor2_fyp1State extends State<assesor2_fyp1> {
                         DropdownButton<int?>(
                           value: selectedScore['$key-$subCriterionIndex'],
                           items: List.generate(
-                            int.parse(
-                              fyp1form['Sub-Criterion Weightages']?.split('\n')[subCriterionIndex] ?? '1',
-                            ),
+                            10,
                                 (index) => DropdownMenuItem<int?>(
                               value: index + 1,
                               child: Text('${index + 1}'),
@@ -301,7 +307,7 @@ class _assesor2_fyp1State extends State<assesor2_fyp1> {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 16.0),
           child: Text(
-            'Total Presentation Form 2 Score: $totalPresentationForm2Score',
+            'Total Presentation Form 2 Score: ${totalPresentationForm2Score!.toStringAsFixed(1)}',
             style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
           ),
         ),
@@ -384,10 +390,12 @@ class _assesor2_fyp1State extends State<assesor2_fyp1> {
   }
 
   void _updateScores(DocumentReference documentReference) {
+    String formattedPresentationForm2Score = totalPresentationForm2Score?.toStringAsFixed(1) ?? '0';
+
     // Prepare data to be updated
     Map<String, dynamic> data = {
       'selectedScore': selectedScore,
-      'totalPresentationForm2Score': totalPresentationForm2Score,
+      'totalPresentationForm2Score': formattedPresentationForm2Score,
       'timestamp': FieldValue.serverTimestamp(), // Update timestamp
     };
 
@@ -446,8 +454,7 @@ class _assesor2_fyp1State extends State<assesor2_fyp1> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text('Total Presentation Form 2 Score: $totalPresentationForm2Score'),
-              // Add more details as needed
+              Text('Total Presentation Form 2 Score: ${totalPresentationForm2Score?.toStringAsFixed(1) ?? '0'}'),
             ],
           ),
           actions: [

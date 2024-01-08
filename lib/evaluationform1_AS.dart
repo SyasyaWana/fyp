@@ -24,8 +24,8 @@ class _EvaluationForm1_ASState extends State<EvaluationForm1_AS> {
 
   Map<String, int?> selectedScore = {};
 
-  int? totalPresentationFormScore;
-  int? totalFinalReportFormScore;
+  double? totalPresentationFormScore;
+  double? totalFinalReportFormScore;
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -88,24 +88,26 @@ class _EvaluationForm1_ASState extends State<EvaluationForm1_AS> {
   }
 
   void _calculateTotalScore() {
-    int presentationFormSum = 0;
-    int finalReportFormSum = 0;
+    double presentationFormSum = 0.0;
+    double finalReportFormSum = 0.0;
 
     fyp1forms.forEach((form) {
-      if (form['Form Type'] == 'Presentation Form') {
+      if (form['Form Type'] == 'Presentation Form' || form['Form Type'] == 'Final Report Form') {
         List<String> subCriteriaList = (form['Sub-Criteria'] ?? '').split('\n');
+        List<String> subCriterionWeightagesList = (form['Sub-Criterion Weightages'] ?? '').split('\n');
+
         for (var subCriterionIndex = 0; subCriterionIndex < subCriteriaList.length; subCriterionIndex++) {
           final key = '${form['key']}-$subCriterionIndex';
           if (selectedScore[key] != null) {
-            presentationFormSum += selectedScore[key]!;
-          }
-        }
-      } else if (form['Form Type'] == 'Final Report Form') {
-        List<String> subCriteriaList = (form['Sub-Criteria'] ?? '').split('\n');
-        for (var subCriterionIndex = 0; subCriterionIndex < subCriteriaList.length; subCriterionIndex++) {
-          final key = '${form['key']}-$subCriterionIndex';
-          if (selectedScore[key] != null) {
-            finalReportFormSum += selectedScore[key]!;
+            // Ensure the index is within bounds
+            if (subCriterionIndex < subCriterionWeightagesList.length) {
+              double subCriterionWeightage = double.parse(subCriterionWeightagesList[subCriterionIndex] ?? '0');
+              if (form['Form Type'] == 'Presentation Form') {
+                presentationFormSum += (selectedScore[key]! / 10 * subCriterionWeightage);
+              } else if (form['Form Type'] == 'Final Report Form') {
+                finalReportFormSum += (selectedScore[key]! / 10 * subCriterionWeightage);
+              }
+            }
           }
         }
       }
@@ -285,9 +287,7 @@ class _EvaluationForm1_ASState extends State<EvaluationForm1_AS> {
                         DropdownButton<int?>(
                           value: selectedScore['$key-$subCriterionIndex'],
                           items: List.generate(
-                            int.parse(
-                              fyp1form['Sub-Criterion Weightages']?.split('\n')[subCriterionIndex] ?? '1',
-                            ),
+                            10,
                                 (index) => DropdownMenuItem<int?>(
                               value: index + 1,
                               child: Text('${index + 1}'),
@@ -317,7 +317,7 @@ class _EvaluationForm1_ASState extends State<EvaluationForm1_AS> {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 16.0),
           child: Text(
-            'Total Presentation Form Score: $totalPresentationFormScore',
+            'Total Presentation Form Score: ${totalPresentationFormScore!.toStringAsFixed(1)}',
             style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
           ),
         ),
@@ -327,7 +327,7 @@ class _EvaluationForm1_ASState extends State<EvaluationForm1_AS> {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 16.0),
           child: Text(
-            'Total Final Report Form Score: $totalFinalReportFormScore',
+            'Total Final Report Form Score: ${totalFinalReportFormScore!.toStringAsFixed(1)}',
             style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
           ),
         ),
@@ -409,11 +409,14 @@ class _EvaluationForm1_ASState extends State<EvaluationForm1_AS> {
   }
 
   void _updateScores(DocumentReference documentReference) {
+    String formattedPresentationFormScore = totalPresentationFormScore?.toStringAsFixed(1) ?? '0';
+    String formattedFinalReportFormScore = totalFinalReportFormScore?.toStringAsFixed(1) ?? '0';
+
     // Prepare data to be updated
     Map<String, dynamic> data = {
       'selectedScore': selectedScore,
-      'totalPresentationFormScore': totalPresentationFormScore,
-      'totalFinalReportFormScore': totalFinalReportFormScore,
+      'totalPresentationFormScore': formattedPresentationFormScore,
+      'totalFinalReportFormScore': formattedFinalReportFormScore,
       'timestamp': FieldValue.serverTimestamp(), // Update timestamp
     };
 
@@ -473,8 +476,8 @@ class _EvaluationForm1_ASState extends State<EvaluationForm1_AS> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text('Total Presentation Form Score: $totalPresentationFormScore'),
-              Text('Total Final Report Form Score: $totalFinalReportFormScore'),
+              Text('Total Presentation Form Score: ${totalPresentationFormScore?.toStringAsFixed(1) ?? '0'}'),
+              Text('Total Final Report Form Score: ${totalFinalReportFormScore?.toStringAsFixed(1) ?? '0'}'),
               // Add more details as needed
             ],
           ),

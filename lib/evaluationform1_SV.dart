@@ -24,8 +24,8 @@ class _EvaluationForm1_SVState extends State<EvaluationForm1_SV> {
 
   Map<String, int?> selectedScore = {};
 
-  int? totalProgressProjectFormScore;
-  int? totalFinalReportFormSVScore;
+  double? totalProgressProjectFormScore;
+  double? totalFinalReportFormSVScore;
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -88,24 +88,26 @@ class _EvaluationForm1_SVState extends State<EvaluationForm1_SV> {
   }
 
   void _calculateTotalScore() {
-    int progressProjectFormSum = 0;
-    int finalReportFormSVSum = 0;
+    double progressProjectFormSum = 0.0;
+    double finalReportFormSVSum = 0.0;
 
     fyp1forms.forEach((form) {
-      if  (form['Form Type'] == 'Project Progress Form') {
+      if (form['Form Type'] == 'Project Progress Form' || form['Form Type'] == 'Final Report Form SV') {
         List<String> subCriteriaList = (form['Sub-Criteria'] ?? '').split('\n');
+        List<String> subCriterionWeightagesList = (form['Sub-Criterion Weightages'] ?? '').split('\n');
+
         for (var subCriterionIndex = 0; subCriterionIndex < subCriteriaList.length; subCriterionIndex++) {
           final key = '${form['key']}-$subCriterionIndex';
           if (selectedScore[key] != null) {
-            progressProjectFormSum += selectedScore[key]!;
-          }
-        }
-      } else if (form['Form Type'] == 'Final Report Form SV') {
-        List<String> subCriteriaList = (form['Sub-Criteria'] ?? '').split('\n');
-        for (var subCriterionIndex = 0; subCriterionIndex < subCriteriaList.length; subCriterionIndex++) {
-          final key = '${form['key']}-$subCriterionIndex';
-          if (selectedScore[key] != null) {
-            finalReportFormSVSum += selectedScore[key]!;
+            // Ensure the index is within bounds
+            if (subCriterionIndex < subCriterionWeightagesList.length) {
+              double subCriterionWeightage = double.parse(subCriterionWeightagesList[subCriterionIndex] ?? '0');
+              if (form['Form Type'] == 'Project Progress Form') {
+                progressProjectFormSum += (selectedScore[key]! / 10 * subCriterionWeightage);
+              } else if (form['Form Type'] == 'Final Report Form SV') {
+                finalReportFormSVSum += (selectedScore[key]! / 10 * subCriterionWeightage);
+              }
+            }
           }
         }
       }
@@ -285,9 +287,7 @@ class _EvaluationForm1_SVState extends State<EvaluationForm1_SV> {
                         DropdownButton<int?>(
                           value: selectedScore['$key-$subCriterionIndex'],
                           items: List.generate(
-                            int.parse(
-                              fyp1form['Sub-Criterion Weightages']?.split('\n')[subCriterionIndex] ?? '1',
-                            ),
+                            10,
                                 (index) => DropdownMenuItem<int?>(
                               value: index + 1,
                               child: Text('${index + 1}'),
@@ -317,7 +317,7 @@ class _EvaluationForm1_SVState extends State<EvaluationForm1_SV> {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 16.0),
           child: Text(
-            'Total Project Progress Form Score: $totalProgressProjectFormScore',
+            'Total Project Progress Form Score: ${totalProgressProjectFormScore!.toStringAsFixed(1)}',
             style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
           ),
         ),
@@ -327,7 +327,7 @@ class _EvaluationForm1_SVState extends State<EvaluationForm1_SV> {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 16.0),
           child: Text(
-            'Total Final Report Form SV Score: $totalFinalReportFormSVScore',
+            'Total Final Report Form SV Score: ${totalFinalReportFormSVScore!.toStringAsFixed(1)}',
             style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
           ),
         ),
@@ -409,11 +409,14 @@ class _EvaluationForm1_SVState extends State<EvaluationForm1_SV> {
   }
 
   void _updateScores(DocumentReference documentReference) {
+    String formattedProgressProjectFormScore = totalProgressProjectFormScore?.toStringAsFixed(1) ?? '0';
+    String formattedFinalReportFormSVScore = totalFinalReportFormSVScore?.toStringAsFixed(1) ?? '0';
+
     // Prepare data to be updated
     Map<String, dynamic> data = {
       'selectedScore': selectedScore,
-      'totalProgressProjectFormScore' : totalProgressProjectFormScore,
-      'totalFinalReportFormSVScore': totalFinalReportFormSVScore,
+      'totalProgressProjectFormScore' : formattedProgressProjectFormScore,
+      'totalFinalReportFormSVScore': formattedFinalReportFormSVScore,
       'timestamp': FieldValue.serverTimestamp(), // Update timestamp
     };
 
@@ -473,9 +476,8 @@ class _EvaluationForm1_SVState extends State<EvaluationForm1_SV> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text('Total Project Progress Form Score: $totalProgressProjectFormScore'),
-              Text('Total Final Report Form SV Score: $totalFinalReportFormSVScore'),
-              // Add more details as needed
+              Text('Total Project Progress Form Score: ${totalProgressProjectFormScore?.toStringAsFixed(1) ?? '0'}'),
+              Text('Total Final Report Form SV Score: ${totalFinalReportFormSVScore?.toStringAsFixed(1) ?? '0'}'),
             ],
           ),
           actions: [
