@@ -204,27 +204,27 @@ class _ViewResult1State extends State<ViewResult1> {
                       DataRow(cells: [
                         const DataCell(Text('Assessor 1')),
                         const DataCell(Text('Presentation Form')),
-                        DataCell(Text('${totalPresentationFormScore.toInt()}')),
+                        DataCell(Text('${totalPresentationFormScore.toStringAsFixed(1)}')),
                       ]),
                       DataRow(cells: [
                         const DataCell(Text('Assessor 1')),
                         const DataCell(Text('Final Report Form')),
-                        DataCell(Text('${totalFinalReportFormScore.toInt()}')),
+                        DataCell(Text('${totalFinalReportFormScore.toStringAsFixed(1)}')),
                       ]),
                       DataRow(cells: [
                         const DataCell(Text('Assessor 2')),
                         const DataCell(Text('Presentation Form 2')),
-                        DataCell(Text('${totalPresentationForm2Score.toInt()}')),
+                        DataCell(Text('${totalPresentationForm2Score.toStringAsFixed(1)}')),
                       ]),
                       DataRow(cells: [
                         const DataCell(Text('Supervisor')),
                         const DataCell(Text('Project Progress Form')),
-                        DataCell(Text('${totalProgressProjectFormScore.toInt()}')),
+                        DataCell(Text('${totalProgressProjectFormScore.toStringAsFixed(1)}')),
                       ]),
                       DataRow(cells: [
                         const DataCell(Text('Supervisor')),
                         const DataCell(Text('Final Report Form SV')),
-                        DataCell(Text('${totalFinalReportFormSVScore.toInt()}')),
+                        DataCell(Text('${totalFinalReportFormSVScore.toStringAsFixed(1)}')),
                       ]),
                     ],
                   ),

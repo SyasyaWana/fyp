@@ -263,13 +263,20 @@ class _StudentListSVState extends State<StudentListSV> {
                 value: selectedSupervisor,
                 items: supervisorOptions.map((supervisor) {
                   String scoreText;
+                  double scoreValue;
+
+                  // Convert the score to double before formatting
                   if (supervisor == "Progress Project Form") {
-                    scoreText = '${scoresData['totalProgressProjectFormScore'] ?? 'N/A'}';
+                    scoreValue = double.parse((scoresData['totalProgressProjectFormScore'] ?? 0).toStringAsFixed(1));
                   } else if (supervisor == "Final Report Form") {
-                    scoreText = '${scoresData['totalFinalReportFormSVScore'] ?? 'N/A'}';
+                    scoreValue = double.parse((scoresData['totalFinalReportFormSVScore'] ?? 0).toStringAsFixed(1));
                   } else {
-                    scoreText = '${scoresData['totalTechnicalPaperFormScore'] ?? 'N/A'}';
+                    scoreValue = double.parse((scoresData['totalTechnicalPaperFormScore'] ?? 0).toStringAsFixed(1));
                   }
+
+                  // Format the scoreText using the formatted scoreValue
+                  scoreText = scoreValue.toString();
+
                   return DropdownMenuItem<String>(
                     value: supervisor,
                     child: Text('$supervisor: $scoreText'),
@@ -302,9 +309,21 @@ class _StudentListSVState extends State<StudentListSV> {
               DropdownButton<String>(
                 value: selectedAssessor,
                 items: assessorOptions.map((assessor) {
+                  double scoreValue;
+
+                  // Convert the score to double before formatting
+                  if (assessor == "Presentation Form") {
+                    scoreValue = double.parse((scoresData['totalPresentationFormScore'] ?? 0).toStringAsFixed(1));
+                  } else {
+                    scoreValue = double.parse((scoresData['totalFinalReportFormScore'] ?? 0).toStringAsFixed(1));
+                  }
+
+                  // Format the scoreText using the formatted scoreValue
+                  String scoreText = scoreValue.toString();
+
                   return DropdownMenuItem<String>(
                     value: assessor,
-                    child: Text('$assessor: ${assessor == "Presentation Form" ? (scoresData['totalPresentationFormScore'] ?? 'N/A') : (scoresData['totalFinalReportFormScore'] ?? 'N/A')}'),
+                    child: Text('$assessor: $scoreText'),
                   );
                 }).toList(),
                 onChanged: (String? newValue) {
@@ -334,9 +353,17 @@ class _StudentListSVState extends State<StudentListSV> {
               DropdownButton<String>(
                 value: selectedAssessor2,
                 items: assessor2Options.map((assessor2) {
+                  double scoreValue;
+
+                  // Convert the score to double before formatting
+                  scoreValue = double.parse((scoresData['totalPresentationForm2Score'] ?? 0).toStringAsFixed(1));
+
+                  // Format the scoreText using the formatted scoreValue
+                  String scoreText = scoreValue.toString();
+
                   return DropdownMenuItem<String>(
                     value: assessor2,
-                    child: Text('$assessor2: ${assessor2 == "Presentation Form" ? scoresData['totalPresentationForm2Score'] ?? 'N/A' : ''}'),
+                    child: Text('$assessor2: ${assessor2 == "Presentation Form" ? scoreText : ''}'),
                   );
                 }).toList(),
                 onChanged: (String? newValue) {

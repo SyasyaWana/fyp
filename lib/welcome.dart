@@ -18,6 +18,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       appBar: AppBar(
         backgroundColor: Colors.purpleAccent,
         iconTheme: const IconThemeData(color: Colors.white),
+        leading: null, // No back button
       ),
       backgroundColor: Colors.white,
       body: Padding(

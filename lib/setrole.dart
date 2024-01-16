@@ -165,35 +165,36 @@ class _SetRoleScreenState extends State<SetRoleScreen> {
                         // Center Admin image
                         GestureDetector(
                           onTap: () {
-                            if (widget.userEmail == 'inurina@unikl.edu.my') {
-                              // Navigate to AdminScreen only for admin user
+                         //   if (widget.userEmail == 'inurina@unikl.edu.my') {
+                         //     // Navigate to AdminScreen only for admin user
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => const AdminScreen(),
                                 ),
                               );
-                            } else {
+                            },
+                        //    else {
                               // Show a warning message or handle accordingly for non-admin users
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    title: const Text('Warning'),
-                                    content: const Text('You do not have permission to access Admin Screen.'),
-                                    actions: <Widget>[
-                                      TextButton(
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                        },
-                                        child: const Text('OK'),
-                                      ),
-                                    ],
-                                  );
-                                },
-                              );
-                            }
-                          },
+                         //     showDialog(
+                        //        context: context,
+                        //        builder: (BuildContext context) {
+                        //          return AlertDialog(
+                        //            title: const Text('Warning'),
+                        //            content: const Text('You do not have permission to access Admin Screen.'),
+                        //            actions: <Widget>[
+                        //              TextButton(
+                        //                onPressed: () {
+                        //                  Navigator.of(context).pop();
+                        //                },
+                       //                 child: const Text('OK'),
+                        //              ),
+                        //            ],
+                        //          );
+                        //        },
+                      //        );
+                       //     }
+                     //     },
                           child: Padding(
                             padding: const EdgeInsets.all(20),
                             child: Column(

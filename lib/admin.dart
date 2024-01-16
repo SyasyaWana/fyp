@@ -636,7 +636,13 @@ class _AdminScreenState extends State<AdminScreen> {
         } else if (title == 'Setting') {
           Navigator.push(context, MaterialPageRoute(builder: (context) => const SettingScreen()));
         } else if (title == 'Logout') {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => const WelcomeScreen()));
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const WelcomeScreen(),
+            ),
+                (route) => false, // Remove all routes until this one
+          );
         } else if (title == 'Manage Assessor') {
           Navigator.push(context, MaterialPageRoute(builder: (context) => const AssessorAdmin()));
         } else if (title == 'Manage Supervisor') {

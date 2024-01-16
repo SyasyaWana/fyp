@@ -90,18 +90,10 @@ class _assesor2_fyp1State extends State<assesor2_fyp1> {
     fyp1forms.forEach((form) {
       if (form['Form Type'] == 'Presentation Form 2') {
         List<String> subCriteriaList = (form['Sub-Criteria'] ?? '').split('\n');
-        List<String> subCriterionWeightagesList = (form['Sub-Criterion Weightages'] ?? '').split('\n');
-
         for (var subCriterionIndex = 0; subCriterionIndex < subCriteriaList.length; subCriterionIndex++) {
           final key = '${form['key']}-$subCriterionIndex';
           if (selectedScore[key] != null) {
-            // Ensure the index is within bounds
-            if (subCriterionIndex < subCriterionWeightagesList.length) {
-              double subCriterionWeightage = double.parse(subCriterionWeightagesList[subCriterionIndex] ?? '0');
-              if (form['Form Type'] == 'Presentation Form 2') {
-                presentationForm2Sum += (selectedScore[key]! / 10 * subCriterionWeightage);
-              }
-            }
+            presentationForm2Sum += (selectedScore[key]! / 10) * double.parse(form['Sub-Criterion Weightages']?.split('\n')[subCriterionIndex] ?? '1');
           }
         }
       }
@@ -181,16 +173,16 @@ class _assesor2_fyp1State extends State<assesor2_fyp1> {
                                       ),
                                     ),
                                   ),
-                                 // Container(
-                                 //   padding: const EdgeInsets.only(right: 40.0),
-                                 //   child: const Text(
+                                  // Container(
+                                  //   padding: const EdgeInsets.only(right: 40.0),
+                                  //   child: const Text(
                                   //    'WEIGHTAGE',
-                                //      style: TextStyle(
-                                 //       fontWeight: FontWeight.bold,
-                                 //       fontSize: 18,
-                                 //     ),
-                                //    ),
-                               //   ),
+                                  //      style: TextStyle(
+                                  //       fontWeight: FontWeight.bold,
+                                  //       fontSize: 18,
+                                  //     ),
+                                  //    ),
+                                  //   ),
                                   Container(
                                     padding: const EdgeInsets.only(left: 80.0),
                                     child: const Text(
@@ -258,14 +250,14 @@ class _assesor2_fyp1State extends State<assesor2_fyp1> {
                         ),
                     ],
                   ),
-                 // const SizedBox(width: 70),
-                //  Container(
-                //    padding: const EdgeInsets.only(right: 30.0, top: 8.0, bottom: 8.0),
-                //    child: Text(
-                //      "${fyp1form['Criterion Weightage']}",
-                //      style: const TextStyle(fontWeight: FontWeight.bold),
-                //    ),
-                //  ),
+                  // const SizedBox(width: 70),
+                  //  Container(
+                  //    padding: const EdgeInsets.only(right: 30.0, top: 8.0, bottom: 8.0),
+                  //    child: Text(
+                  //      "${fyp1form['Criterion Weightage']}",
+                  //      style: const TextStyle(fontWeight: FontWeight.bold),
+                  //    ),
+                  //  ),
                   const SizedBox(width: 120),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -278,6 +270,9 @@ class _assesor2_fyp1State extends State<assesor2_fyp1> {
                           value: selectedScore['$key-$subCriterionIndex'],
                           items: List.generate(
                             10,
+                          //  int.parse(
+                          //    fyp1form['Sub-Criterion Weightages']?.split('\n')[subCriterionIndex] ?? '1',
+                          //  ),
                                 (index) => DropdownMenuItem<int?>(
                               value: index + 1,
                               child: Text('${index + 1}'),
@@ -307,7 +302,7 @@ class _assesor2_fyp1State extends State<assesor2_fyp1> {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 16.0),
           child: Text(
-            'Total Presentation Form 2 Score: ${totalPresentationForm2Score!.toStringAsFixed(1)}',
+            'Total Presentation Form 2 Score: ${totalPresentationForm2Score?.toStringAsFixed(1) ?? "N/A"}',
             style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
           ),
         ),
@@ -390,12 +385,10 @@ class _assesor2_fyp1State extends State<assesor2_fyp1> {
   }
 
   void _updateScores(DocumentReference documentReference) {
-    String formattedPresentationForm2Score = totalPresentationForm2Score?.toStringAsFixed(1) ?? '0';
-
     // Prepare data to be updated
     Map<String, dynamic> data = {
       'selectedScore': selectedScore,
-      'totalPresentationForm2Score': formattedPresentationForm2Score,
+      'totalPresentationForm2Score': totalPresentationForm2Score,
       'timestamp': FieldValue.serverTimestamp(), // Update timestamp
     };
 
@@ -454,7 +447,8 @@ class _assesor2_fyp1State extends State<assesor2_fyp1> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text('Total Presentation Form 2 Score: ${totalPresentationForm2Score?.toStringAsFixed(1) ?? '0'}'),
+              Text('Total Presentation Form 2 Score: ${totalPresentationForm2Score?.toStringAsFixed(1) ?? "N/A"}'),
+              // Add more details as needed
             ],
           ),
           actions: [

@@ -356,7 +356,7 @@ class _Result2State extends State<Result2> {
                     children: [
                       pw.Center(
                         child: pw.Text(
-                          "${averagePresentationScore.toInt()}",
+                          "${averagePresentationScore.toStringAsFixed(1)}",
                           style: pw.TextStyle(
                             fontSize: 15,
                             fontWeight: pw.FontWeight.bold,
@@ -367,7 +367,7 @@ class _Result2State extends State<Result2> {
                       pw.SizedBox(height: 20),
                       pw.Center(
                         child: pw.Text(
-                          "${totalProgressProjectFormScore.toInt()}",
+                          "${totalProgressProjectFormScore.toStringAsFixed(1)}",
                           style: pw.TextStyle(
                             fontSize: 15,
                             fontWeight: pw.FontWeight.bold,
@@ -378,7 +378,7 @@ class _Result2State extends State<Result2> {
                       pw.SizedBox(height: 20),
                       pw.Center(
                         child: pw.Text(
-                          "${averageFinalReportScore.toInt()}",
+                          "${averageFinalReportScore.toStringAsFixed(1)}",
                           style: pw.TextStyle(
                             fontSize: 15,
                             fontWeight: pw.FontWeight.bold,
@@ -389,7 +389,7 @@ class _Result2State extends State<Result2> {
                       pw.SizedBox(height: 20),
                       pw.Center(
                         child: pw.Text(
-                          "${totalTechnicalPaperFormScore.toInt()}",
+                          "${totalTechnicalPaperFormScore.toStringAsFixed(1)}",
                           style: pw.TextStyle(
                             fontSize: 15,
                             fontWeight: pw.FontWeight.bold,
@@ -576,23 +576,23 @@ class _Result2State extends State<Result2> {
                     rows: [
                       DataRow(cells: [
                         const DataCell(Text('Presentation Form')),
-                        DataCell(Text('${averagePresentationScore.toInt()}')),
+                        DataCell(Text('${averagePresentationScore.toStringAsFixed(1)}')),
                       ]),
                       DataRow(cells: [
                         const DataCell(Text('Project Progress Form')),
-                        DataCell(Text('${totalProgressProjectFormScore.toInt()}')),
+                        DataCell(Text('${totalProgressProjectFormScore.toStringAsFixed(1)}')),
                       ]),
                       DataRow(cells: [
                         const DataCell(Text('Final Report Form')),
-                        DataCell(Text('${averageFinalReportScore.toInt()}')),
+                        DataCell(Text('${averageFinalReportScore.toStringAsFixed(1)}')),
                       ]),
                       DataRow(cells: [
                         const DataCell(Text('Technical Paper Form')),
-                        DataCell(Text('${totalTechnicalPaperFormScore.toInt()}')),
+                        DataCell(Text('${totalTechnicalPaperFormScore.toStringAsFixed(1)}')),
                       ]),
                       DataRow(cells: [
                         const DataCell(Text('Total Score')),
-                        DataCell(Text('${totalScore.toInt()}')),
+                        DataCell(Text('${totalScore.toStringAsFixed(1)}')),
                       ]),
                       DataRow(cells: [
                         const DataCell(Text('Point Value')),

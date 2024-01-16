@@ -96,13 +96,12 @@ class _EvaluationForm2_SVState extends State<EvaluationForm2_SV> {
     double technicalPaperFormSum = 0.0;
 
     fyp1forms.forEach((form) {
-      if (form['Form Type'] == 'Project Progress Form') {
+      if  (form['Form Type'] == 'Project Progress Form') {
         List<String> subCriteriaList = (form['Sub-Criteria'] ?? '').split('\n');
         for (var subCriterionIndex = 0; subCriterionIndex < subCriteriaList.length; subCriterionIndex++) {
           final key = '${form['key']}-$subCriterionIndex';
           if (selectedScore[key] != null) {
-            progressProjectFormSum += (selectedScore[key]! / 10 *
-                double.parse(form['Sub-Criterion Weightages']?.split('\n')[subCriterionIndex] ?? '1'));
+            progressProjectFormSum += (selectedScore[key]! / 10) * double.parse(form['Sub-Criterion Weightages']?.split('\n')[subCriterionIndex] ?? '1');
           }
         }
       } else if (form['Form Type'] == 'Final Report Form SV') {
@@ -110,8 +109,7 @@ class _EvaluationForm2_SVState extends State<EvaluationForm2_SV> {
         for (var subCriterionIndex = 0; subCriterionIndex < subCriteriaList.length; subCriterionIndex++) {
           final key = '${form['key']}-$subCriterionIndex';
           if (selectedScore[key] != null) {
-            finalReportFormSVSum += (selectedScore[key]! / 10 *
-                double.parse(form['Sub-Criterion Weightages']?.split('\n')[subCriterionIndex] ?? '1'));
+            finalReportFormSVSum += (selectedScore[key]! / 10) * double.parse(form['Sub-Criterion Weightages']?.split('\n')[subCriterionIndex] ?? '1');
           }
         }
       } else if (form['Form Type'] == 'Technical Paper Form') {
@@ -119,8 +117,7 @@ class _EvaluationForm2_SVState extends State<EvaluationForm2_SV> {
         for (var subCriterionIndex = 0; subCriterionIndex < subCriteriaList.length; subCriterionIndex++) {
           final key = '${form['key']}-$subCriterionIndex';
           if (selectedScore[key] != null) {
-            technicalPaperFormSum += (selectedScore[key]! / 10 *
-                double.parse(form['Sub-Criterion Weightages']?.split('\n')[subCriterionIndex] ?? '1'));
+            technicalPaperFormSum += (selectedScore[key]! / 10) * double.parse(form['Sub-Criterion Weightages']?.split('\n')[subCriterionIndex] ?? '1');
           }
         }
       }
@@ -206,16 +203,16 @@ class _EvaluationForm2_SVState extends State<EvaluationForm2_SV> {
                                       ),
                                     ),
                                   ),
-                                 // Container(
-                                 //   padding: const EdgeInsets.only(right: 40.0),
-                                 //   child: const Text(
-                                 //     'WEIGHTAGE',
-                                //      style: TextStyle(
-                                 //       fontWeight: FontWeight.bold,
-                                 //       fontSize: 18,
-                                 //     ),
-                                //    ),
-                                //  ),
+                                  // Container(
+                                  //   padding: const EdgeInsets.only(right: 40.0),
+                                  //   child: const Text(
+                                  //     'WEIGHTAGE',
+                                  //      style: TextStyle(
+                                  //       fontWeight: FontWeight.bold,
+                                  //       fontSize: 18,
+                                  //     ),
+                                  //    ),
+                                  //  ),
                                   Container(
                                     padding: const EdgeInsets.only(left: 80.0),
                                     child: const Text(
@@ -283,24 +280,29 @@ class _EvaluationForm2_SVState extends State<EvaluationForm2_SV> {
                         ),
                     ],
                   ),
-                 // const SizedBox(width: 70),
-                //  Container(
-                 //   padding: const EdgeInsets.only(right: 30.0, top: 8.0, bottom: 8.0),
-                 //   child: Text(
-                 //     "${fyp1form['Criterion Weightage']}",
-                   //   style: const TextStyle(fontWeight: FontWeight.bold),
-                 //   ),
-                 // ),
+                  // const SizedBox(width: 70),
+                  //  Container(
+                  //   padding: const EdgeInsets.only(right: 30.0, top: 8.0, bottom: 8.0),
+                  //   child: Text(
+                  //     "${fyp1form['Criterion Weightage']}",
+                  //   style: const TextStyle(fontWeight: FontWeight.bold),
+                  //   ),
+                  // ),
                   const SizedBox(width: 120),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const SizedBox(height: 25),
-                      for (var subCriterionIndex = 0; subCriterionIndex < subCriteriaList.length; subCriterionIndex++)
+                      for (var subCriterionIndex = 0;
+                      subCriterionIndex < subCriteriaList.length;
+                      subCriterionIndex++)
                         DropdownButton<int?>(
                           value: selectedScore['$key-$subCriterionIndex'],
                           items: List.generate(
                             10,
+                           // int.parse(
+                           //   fyp1form['Sub-Criterion Weightages']?.split('\n')[subCriterionIndex] ?? '1',
+                          //  ),
                                 (index) => DropdownMenuItem<int?>(
                               value: index + 1,
                               child: Text('${index + 1}'),
@@ -330,7 +332,7 @@ class _EvaluationForm2_SVState extends State<EvaluationForm2_SV> {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 16.0),
           child: Text(
-            'Total Project Progress Form Score: ${totalProgressProjectFormScore!.toStringAsFixed(1)}',
+            'Total Project Progress Form Score: ${totalProgressProjectFormScore?.toStringAsFixed(1) ?? "N/A"}',
             style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
           ),
         ),
@@ -340,7 +342,7 @@ class _EvaluationForm2_SVState extends State<EvaluationForm2_SV> {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 16.0),
           child: Text(
-            'Total Final Report Form SV Score: ${totalFinalReportFormSVScore!.toStringAsFixed(1)}',
+            'Total Final Report Form SV Score: ${totalFinalReportFormSVScore?.toStringAsFixed(1) ?? "N/A"}',
             style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
           ),
         ),
@@ -350,7 +352,7 @@ class _EvaluationForm2_SVState extends State<EvaluationForm2_SV> {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 16.0),
           child: Text(
-            'Total Technical Paper Form Score: ${totalTechnicalPaperFormScore!.toStringAsFixed(1)}',
+            'Total Technical Paper Form Score: ${totalTechnicalPaperFormScore?.toStringAsFixed(1) ?? "N/A"}',
             style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
           ),
         ),
@@ -433,16 +435,12 @@ class _EvaluationForm2_SVState extends State<EvaluationForm2_SV> {
   }
 
   void _updateScores(DocumentReference documentReference) {
-    String formattedProgressProjectFormScore = totalProgressProjectFormScore?.toStringAsFixed(1) ?? '0';
-    String formattedFinalReportFormSVScore = totalFinalReportFormSVScore?.toStringAsFixed(1) ?? '0';
-    String formattedTechnicalPaperFormScore = totalTechnicalPaperFormScore?.toStringAsFixed(1) ?? '0';
-
     // Prepare data to be updated
     Map<String, dynamic> data = {
       'selectedScore': selectedScore,
-      'totalProgressProjectFormScore' : formattedProgressProjectFormScore,
-      'totalFinalReportFormSVScore': formattedFinalReportFormSVScore,
-      'totalTechnicalPaperFormScore' : formattedTechnicalPaperFormScore,
+      'totalProgressProjectFormScore' : totalProgressProjectFormScore,
+      'totalFinalReportFormSVScore': totalFinalReportFormSVScore,
+      'totalTechnicalPaperFormScore' : totalTechnicalPaperFormScore,
       'timestamp': FieldValue.serverTimestamp(), // Update timestamp
     };
 
@@ -491,6 +489,7 @@ class _EvaluationForm2_SVState extends State<EvaluationForm2_SV> {
       print('Error saving data: $error');
     });
   }
+
   void _showScoreSummary() {
     // Show an alert with the score summary
     showDialog(
@@ -502,9 +501,9 @@ class _EvaluationForm2_SVState extends State<EvaluationForm2_SV> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text('Total Project Progress Form Score: ${totalProgressProjectFormScore?.toStringAsFixed(1) ?? '0'}'),
-              Text('Total Final Report Form SV Score: ${totalFinalReportFormSVScore?.toStringAsFixed(1) ?? '0'}'),
-              Text('Total Technical Paper Form Score: ${totalTechnicalPaperFormScore?.toStringAsFixed(1) ?? '0'}'),
+              Text('Total Project Progress Form Score: ${totalProgressProjectFormScore?.toStringAsFixed(1) ?? "N/A"}'),
+              Text('Total Final Report Form SV Score: ${totalFinalReportFormSVScore?.toStringAsFixed(1) ?? "N/A"}'),
+              Text('Total Technical Paper Form Score: ${totalTechnicalPaperFormScore?.toStringAsFixed(1) ?? "N/A"}'),
             ],
           ),
           actions: [

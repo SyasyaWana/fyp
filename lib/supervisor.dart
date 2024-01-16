@@ -326,7 +326,13 @@ class _SupervisorScreenState extends State<SupervisorScreen> {
       ),
       onTap: () {
         if (title == 'Logout') {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => const WelcomeScreen()));
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const WelcomeScreen(),
+            ),
+                (route) => false, // Remove all routes until this one
+          );
         } else if (title == 'Setting') {
           Navigator.push(context, MaterialPageRoute(builder: (context) => const SettingScreen()));
         } else if (title == 'FYP 1 Evaluation') {

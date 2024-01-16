@@ -297,7 +297,13 @@ class _AssessorScreenState extends State<AssessorScreen> {
         if (title == 'Dashboard') {
           Navigator.push(context, MaterialPageRoute(builder: (context) => const AssessorScreen()));
         } else if (title == 'Logout') {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => const WelcomeScreen()));
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const WelcomeScreen(),
+            ),
+                (route) => false, // Remove all routes until this one
+          );
         } else if (title == 'Setting') {
           Navigator.push(context, MaterialPageRoute(builder: (context) => const SettingScreen()));
         }
